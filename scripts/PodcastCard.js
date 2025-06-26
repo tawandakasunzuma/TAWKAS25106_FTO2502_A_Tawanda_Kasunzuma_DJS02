@@ -6,7 +6,9 @@ export class PodcastCard extends HTMLElement {
 
     set podcastData (data) {
         this._data = data;
-        this.render();
+        if (this.isConnected) {
+            this.render();
+        }
     }
 
     render () {
@@ -17,7 +19,11 @@ export class PodcastCard extends HTMLElement {
         `;
     }
 
-    connectedCallback () {}
+    connectedCallback () {
+        if (this._data) {
+            this.render();
+        }
+    }
 }
 
 customElements.define ("podcast-card",PodcastCard);
