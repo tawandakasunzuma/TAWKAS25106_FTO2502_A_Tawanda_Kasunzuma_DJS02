@@ -52,7 +52,7 @@ function populateGenres(genreIds) {
     for (let i = 0; i < genres.length; i++) {
       if (genres[i].id === genreIds[j]) {
         const modalGenreName = document.createElement('span');
-        modalGenreName.classList.add('genre-name');
+        modalGenreName.classList.add('modal-genre-item');
         modalGenreName.textContent = genres[i].title;
         modalGenreContainer.append(modalGenreName);
       }
@@ -114,14 +114,11 @@ function createSeasonElement(season, seasonNumber) {
 
   const modalSeasonHeading = document.createElement('h4');
   modalSeasonHeading.classList.add('modal-season-heading');
-  modalSeasonHeading.textContent = `Season ${seasonNumber}`;
+  modalSeasonHeading.textContent = season.title.toLowerCase().includes('season')
+    ? season.title
+    : `Season ${seasonNumber} - ${season.title}`;
 
-  const modalSeasonDescription = document.createElement('p');
-  modalSeasonDescription.classList.add('modal-season-description');
-  modalSeasonDescription.textContent =
-    modalSeasonHeading.textContent !== season.title ? season.title : '-';
-
-  modalSeasonLeft.append(modalSeasonHeading, modalSeasonDescription);
+  modalSeasonLeft.append(modalSeasonHeading);
 
   const modalSeasonRight = document.createElement('div');
   modalSeasonRight.classList.add('modal-season-right');
