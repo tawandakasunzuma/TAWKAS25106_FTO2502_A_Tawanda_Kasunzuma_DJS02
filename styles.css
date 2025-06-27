@@ -174,6 +174,7 @@ main {
     display: flex;
     align-items: flex-start;
     gap: var(--big-gap);
+    margin-bottom: 1vw;
 }
 
 /* Modal Main - Left */

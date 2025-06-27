@@ -1,5 +1,10 @@
 import { genres } from '../scripts/data.js';
 
+/**
+ * `<podcast-card>` displays a podcast card
+ *
+ * @property {Object} podcastData — expects { id, title, image, description, seasons, genres, updated }
+ */
 export class PodcastCard extends HTMLElement {
     constructor () {
         super ();
@@ -11,6 +16,16 @@ export class PodcastCard extends HTMLElement {
                 composed: true
             }))
         })
+        this.shadowRoot.addEventListener('keydown', event => {
+            if (event.key === 'Enter' || event.key === ' ') {
+                this.dispatchEvent(new CustomEvent('podcast-selected', {
+                    detail: this._data,
+                    bubbles: true, 
+                    composed: true
+                }));
+            }
+        });
+
     }
 
     set podcastData (data) {
@@ -151,7 +166,7 @@ export class PodcastCard extends HTMLElement {
 
             </style>
             
-                <article class="podcast-container">
+                <article class="podcast-container" tabindex="0">
                     <div class="image-container">
                         <img
                         class="podcast-image"
