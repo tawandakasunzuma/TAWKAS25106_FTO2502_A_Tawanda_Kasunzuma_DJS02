@@ -4,6 +4,13 @@ export class PodcastCard extends HTMLElement {
     constructor () {
         super ();
         this.attachShadow({ mode: "open" });
+        this.shadowRoot.addEventListener("click", () => {
+            this.dispatchEvent(new CustomEvent("podcast-selected", {
+                detail: this._data,
+                bubbles: true,
+                composed: true
+            }))
+        })
     }
 
     set podcastData (data) {
