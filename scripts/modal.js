@@ -1,4 +1,4 @@
-import { genres, seasons } from '../scripts/data';
+import { genres, seasons } from '../scripts/data.js';
 
 /**
  * Opens the modal for a given podcast and populates its content.
