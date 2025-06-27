@@ -158,12 +158,14 @@ main {
 
 #modal-close-btn {
     width: 20px;
+    font-weight: bold;
     transition: all 300ms ease-in-out;
 }
 
 #modal-close-btn:hover,
 #modal-close-btn:active {
-    transform: scale(1.5);
+    transform: scale(1.125);
+    color: red;
 }
 
 /* Modal Main */
@@ -282,14 +284,8 @@ main {
 .modal-season-heading {
     font-size: 1rem;
     font-weight: 600;
-    margin-bottom: 0.25rem;
+    margin-bottom: 0.5rem;
     cursor: pointer;
-}
-
-.modal-season-description {
-    font-size: 0.75rem;
-    font-weight: 500;
-    color: rgba(0, 0, 0, 0.6);
 }
 
 .modal-season-number {
