@@ -1,64 +1,135 @@
-# DJS02 – Web Component: Podcast Preview
+# Podcast Preview Web Component
 
-## Overview
+## What This Project Is
 
-In this project, you will build a reusable and encapsulated **custom HTML element** that displays a podcast preview. The component must follow the **Web Component standard**, using `customElements.define()` and should work independently from the main application logic. This component will enhance modularity, promote reuse, and reduce code duplication across the app.
+You’ll make a reusable **podcast preview** card as a Web Component. That means:
 
-The component should be designed to **accept podcast data via attributes or properties**, display relevant UI elements (such as title, cover image, and genres), and **communicate with the main application** through custom events.
+- It’s a new HTML tag (like `<podcast-card>`).
+- It works on its own with its own styles.
+- You can drop it anywhere without repeating code.
 
----
-
-## Core Objectives
-
-### Web Component Functionality
-
-- Create a **custom HTML element** using `customElements.define()`.
-- Accept data (cover image, title, genres, number of seasons, and last updated date) **as attributes or properties**.
-- Keep the component **stateless** and reliant on external data provided by the parent.
-- Use **Shadow DOM** for style and logic encapsulation to avoid global conflicts.
-- Trigger a **custom event** when a user interacts with the component (e.g., clicking), so that the parent application can open a modal or take other actions without tightly coupling to the component’s logic.
+The card shows podcast info and lets the main page open a details modal when you click it.
 
 ---
 
-## UI/UX Requirements
+## What You’ll Build
 
-- The component should render a clean and **visually consistent preview** of each podcast.
-- Display:
-  - Podcast **cover image**
-  - Podcast **title**
-  - **Genre names**
-  - **Number of seasons**
-  - **Last updated** in a human-readable format
-- The component must be **responsive**, and match the overall app design on desktop and mobile.
-- On click, the component must notify the parent app to **open a modal** or navigate to details.
+- A custom element called `podcast-card`.
+- It takes podcast data (image, title, genres, seasons, last update) as a **property**.
+- It uses **Shadow DOM** so its styles don’t clash with the page.
+- When you click it or press Enter/Space, it dispatches a `podcast-selected` event.
 
 ---
 
-## Code Quality & Maintainability
+## How It Looks
 
-- Write clear, consistent, and modular code.
-- Follow **functional and object-oriented programming** patterns.
-- Document major functions using **JSDoc comments** (parameters, return types, etc.).
-- Use consistent **code formatting** across HTML, CSS, and JavaScript.
+Each card shows:
 
----
+- The cover image
+- The podcast title
+- Genre labels
+- Number of seasons
+- “Last updated” in a readable date
 
-## Technical Constraints
-
-- Do **not** use any third-party frameworks for creating the web component.
-- Use **native JavaScript (ES6+)**, HTML, and CSS.
-- No page reloads or navigation.
-- Ensure compatibility with modern browsers.
+Cards wrap nicely on different screen sizes.
 
 ---
 
-## Deliverables
+## How to Try It
 
-- A working custom Web Component file (e.g., `PodcastPreview.js`).
-- An HTML demo page showcasing the component usage.
-- A `README.md` file with:
-  - How to use and register the component
-  - Instructions for passing data
-  - How to listen for interaction events
+1. **Clone this repo**
+
+   ```bash
+   git clone https://github.com/tawandakasunzuma/TAWKAS25106_FTO2502_A_Tawanda_Kasunzuma_DJS02.git
+   cd TAWKAS25106_FTO2502_A_Tawanda_Kasunzuma_DJS02
+   ```
+
+2. **Open** `index.html` in your browser.
+
+   - You should see the header, filter section, and all your podcast cards laid out in a grid.
+   - Click (or press Enter/Space on) any card to open its details modal.
+
+3. **Play around**
+   - Try resizing the browser to see how cards wrap on smaller screens.
+   - Click outside the modal or on the close button to dismiss it.
 
 ---
+
+## How to Use in Your Own Project
+
+1. **Import the component** in your HTML:
+
+   ```html
+   <script type="module">
+     import "./scripts/PodcastCard.js";
+     import { openModal, closeModal } from "./scripts/modal.js";
+     import { podcasts } from "./data.js";
+
+     // Render cards on page load
+     document.addEventListener("DOMContentLoaded", () => {
+       const container = document.getElementById("card-section");
+       podcasts.forEach((podcast) => {
+         const card = document.createElement("podcast-card");
+         card.podcastData = podcast;
+         container.append(card);
+       });
+
+       // Listen for card clicks
+       container.addEventListener("podcast-selected", (event) =>
+         openModal(event.detail)
+       );
+
+       // Close modal
+       document
+         .getElementById("modal-close-btn")
+         .addEventListener("click", closeModal);
+       document.getElementById("overlay").addEventListener("click", closeModal);
+     });
+   </script>
+   ```
+
+---
+
+## Podcast Data Format
+
+Your podcast data objects should look like this:
+
+```js
+{
+  id: "10716",
+  title: "Something Was Wrong",
+  description: "Something Was Wrong is an Iris Award–winning true-crime docuseries about…",
+  image: "https://content.production.cdn.art19.com/images/…jpeg",
+  seasons: 14,
+  genres: [1, 2],
+  updated: "2022-11-03T07:00:00.000Z"
+}
+```
+
+---
+
+## API & Events
+
+- **Property**: `podcastData`  
+  Assign a podcast object (as shown above) to this property on your `<podcast-card>` element.
+
+- **Event**: `podcast-selected`
+  - Fired whenever the user **clicks** or presses **Enter/Space** on a card.
+
+---
+
+## Accessibility & Support
+
+- **Keyboard**: Cards are focusable (`tabindex="0"`) and respond to **Enter** or **Space** to open the modal.
+- **Screen Readers**: Each image uses the podcast’s **description** as its `alt` text for context.
+- **Responsive**: Cards and modal adapt to mobile and desktop layouts.
+
+---
+
+## Browser Compatibility
+
+- Works in modern browsers: **Chrome**, **Firefox**, **Edge**, **Safari**.
+
+---
+
+Happy coding! 🎉
